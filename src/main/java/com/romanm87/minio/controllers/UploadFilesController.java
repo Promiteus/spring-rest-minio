@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 @RestController
 @RequestMapping(value = "/api/file")
 public class UploadFilesController {
-    private FileService fileService;
+    private final FileService fileService;
 
     public UploadFilesController(FileService fileService) {
         this.fileService = fileService;
