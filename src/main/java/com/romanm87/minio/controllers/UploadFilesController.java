@@ -1,5 +1,6 @@
 package com.romanm87.minio.controllers;
 
+import com.romanm87.minio.services.FileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,6 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping(value = "/api/file")
 public class UploadFilesController {
+    private FileService fileService;
+
+    public UploadFilesController(FileService fileService) {
+        this.fileService = fileService;
+    }
 
     @PostMapping(value = "/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("bucket") String bucket) {
