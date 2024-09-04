@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "b6bf7125-acca-484b-8b24-e65a5d86051a",
+		"name": "Spring Boot MinIO test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Загрузить файл в MinIO хранилище",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "Любой файл",
+							"type": "file",
+							"src": "/home/roman/Изображения/Результаты тестов qr.zip"
+						},
+						{
+							"key": "bucket",
+							"value": "new",
+							"description": "Название корзины",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/file/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить файл из MinIO хранилища",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/file/download/new/4C.png",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"file",
+						"download",
+						"new",
+						"4C.png"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
