@@ -67,12 +67,16 @@ public class FileService {
      * @throws ErrorResponseException
      */
     public byte[] singleDownload(String bucket, String fileName) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
-        GetObjectResponse objectResponse = this.minioClient.getObject(GetObjectArgs
-                .builder()
-                .bucket(bucket)
-                .object(fileName)
-                .build());
+        if (this.minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build())) {
+            GetObjectResponse objectResponse = this.minioClient.getObject(GetObjectArgs
+                    .builder()
+                    .bucket(bucket)
+                    .object(fileName)
+                    .build());
 
-        return objectResponse.readAllBytes();
+            return objectResponse.readAllBytes();
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Корзина не найдена!");
     }
 }
