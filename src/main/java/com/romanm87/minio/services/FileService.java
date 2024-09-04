@@ -3,12 +3,14 @@ package com.romanm87.minio.services;
 import com.romanm87.minio.dto.FileResource;
 import io.minio.*;
 import io.minio.errors.*;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -56,7 +58,7 @@ public class FileService {
      * Извлечь одиночный файл из MinIO хранилища
      * @param bucket String
      * @param fileName String
-     * @return
+     * @return InputStreamResource
      * @throws IOException
      * @throws InvalidKeyException
      * @throws InvalidResponseException
@@ -67,7 +69,7 @@ public class FileService {
      * @throws XmlParserException
      * @throws ErrorResponseException
      */
-    public byte[] singleDownload(String bucket, String fileName) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
+    public InputStreamResource singleDownload(String bucket, String fileName) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
         if (this.minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucket).build())) {
             GetObjectResponse objectResponse = this.minioClient.getObject(GetObjectArgs
                     .builder()
@@ -75,7 +77,8 @@ public class FileService {
                     .object(fileName)
                     .build());
 
-            return objectResponse.readAllBytes();
+
+            return new InputStreamResource(objectResponse);
         }
 
         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Корзина не найдена!");

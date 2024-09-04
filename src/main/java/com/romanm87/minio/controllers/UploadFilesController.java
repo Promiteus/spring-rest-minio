@@ -3,6 +3,9 @@ package com.romanm87.minio.controllers;
 import com.romanm87.minio.dto.FileResource;
 import com.romanm87.minio.services.FileService;
 import io.minio.errors.*;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +29,9 @@ public class UploadFilesController {
     }
 
     @GetMapping(value = "/download/{bucket}/{fileName}")
-    public ResponseEntity<byte[]> getFile(@PathVariable("bucket") String bucket, @PathVariable("fileName") String fileName) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, ServerException, ErrorResponseException, XmlParserException, InsufficientDataException, InternalException {
-        return ResponseEntity.ok(this.fileService.singleDownload(bucket, fileName));
+    public ResponseEntity<InputStreamResource> getFile(@PathVariable("bucket") String bucket, @PathVariable("fileName") String fileName) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, ServerException, ErrorResponseException, XmlParserException, InsufficientDataException, InternalException {
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_PNG_VALUE)
+                .body(this.fileService.singleDownload(bucket, fileName));
     }
 }
