@@ -42,7 +42,8 @@ public class FileService {
             this.minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucket)
                     .object(file.getOriginalFilename())
-                    .stream(file.getInputStream(), file.getSize(), file.getSize())
+                    .contentType(file.getContentType())
+                    .stream(file.getInputStream(), file.getSize(), -1)
                     .build());
 
             return fileResource;
