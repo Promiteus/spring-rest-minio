@@ -31,7 +31,7 @@ public class UploadFilesController {
     @GetMapping(value = "/download/{bucket}/{fileName}")
     public ResponseEntity<InputStreamResource> getFile(@PathVariable("bucket") String bucket, @PathVariable("fileName") String fileName) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, ServerException, ErrorResponseException, XmlParserException, InsufficientDataException, InternalException {
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_PNG_VALUE)
+                .header(HttpHeaders.CONTENT_TYPE, this.fileService.getContentType(fileName))
                 .body(this.fileService.singleDownload(bucket, fileName));
     }
 }
