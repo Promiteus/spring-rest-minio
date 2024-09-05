@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ExceptionController {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = { Exception.class })
     public ErrorResponse unknownException(Exception ex, WebRequest req) {
         return ErrorResponse.builder().errorMessage(ex.getMessage()).build();
