@@ -68,5 +68,5 @@ mvn clean package
 mvn spring-boot:run
 ```
 6. Импортируйте коллекции postman из одноименной папки в приложение postman. В коллекции два метода: для сохранения файлов в MinIO и их получения через REST API.  
-* POST http://localhost:8080/api/file/upload
-* GET http://localhost:8080/api/file/download/new/report.pdf
+* POST http://localhost:8080/api/file/upload (сохранить файл)
+* GET http://localhost:8080/api/file/download/new/report.pdf (получить файл)
