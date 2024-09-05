@@ -4,6 +4,7 @@ import ch.qos.logback.core.util.StringUtil;
 import com.romanm87.minio.dto.FileResource;
 import io.minio.*;
 import io.minio.errors.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+@Slf4j
 @Service
 public class FileService {
     private MinioClient minioClient;
@@ -85,6 +87,11 @@ public class FileService {
         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Корзина не найдена!");
     }
 
+    /**
+     * Получить ContentType по имени файла
+     * @param fileName String
+     * @return String
+     */
     public String getContentType(String fileName) {
         if (StringUtil.isNullOrEmpty(fileName)) {
             return MediaType.APPLICATION_JSON_VALUE;
@@ -93,13 +100,14 @@ public class FileService {
         String[] fileNameSplit = fileName.split("\\.");
         String ext = fileNameSplit[fileNameSplit.length-1];
 
-        ext = contentTypes.valueOf(ext.toUpperCase()).getTitle();
-
-        if (StringUtil.isNullOrEmpty(ext)) {
-            return MediaType.APPLICATION_JSON_VALUE;
+        try {
+            ext = contentTypes.valueOf(ext.toUpperCase()).getTitle();
+            return ext;
+        } catch (Exception e) {
+            log.error(e.getMessage());
         }
 
-        return ext;
+        return MediaType.APPLICATION_JSON_VALUE;
     }
 
     private enum contentTypes {
