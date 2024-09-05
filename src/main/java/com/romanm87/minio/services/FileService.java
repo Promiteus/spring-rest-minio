@@ -115,10 +115,8 @@ public class FileService {
         JPG (MediaType.IMAGE_JPEG_VALUE),
         JPEG (MediaType.IMAGE_JPEG_VALUE),
         GIF (MediaType.IMAGE_GIF_VALUE),
-        PDF (MediaType.APPLICATION_PDF_VALUE),
-        DOCX ("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
-        XLS ("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
-        XLSX ("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        PDF (MediaType.APPLICATION_PDF_VALUE);
+
 
         private String title;
 
