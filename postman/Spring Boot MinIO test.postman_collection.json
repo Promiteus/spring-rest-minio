@@ -15,9 +15,9 @@
 					"formdata": [
 						{
 							"key": "file",
-							"description": "Любой файл",
+							"description": "Файл (png, jpg, gif, pdf)",
 							"type": "file",
-							"src": "/home/roman/Изображения/Результаты тестов qr.zip"
+							"src": "/home/roman/Загрузки/Матвеев Роман Александрович.pdf"
 						},
 						{
 							"key": "bucket",
@@ -47,9 +47,16 @@
 			"name": "Получить файл из MinIO хранилища",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "image/png",
+						"type": "text",
+						"disabled": true
+					}
+				],
 				"url": {
-					"raw": "http://localhost:8080/api/file/download/new/4C.png",
+					"raw": "http://localhost:8080/api/file/download/new/Матвеев Роман Александрович.pdf",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -60,7 +67,7 @@
 						"file",
 						"download",
 						"new",
-						"4C.png"
+						"Матвеев Роман Александрович.pdf"
 					]
 				}
 			},
